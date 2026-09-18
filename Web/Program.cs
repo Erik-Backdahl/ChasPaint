@@ -35,6 +35,12 @@ namespace ChasPaint.Web
             builder.Services.AddAuthorization();
 
             //SERVICES HJERE
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IPointService, PointService>();
+            builder.Services.AddScoped<IPointRepository, PointRepository>();
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            builder.Services.AddScoped<RegisterUserHandler>();
 
             var app = builder.Build();
 
