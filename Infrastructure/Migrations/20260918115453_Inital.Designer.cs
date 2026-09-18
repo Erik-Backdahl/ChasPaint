@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ChasPaintDbContext))]
-    [Migration("20260915000926_Inital")]
+    [Migration("20260918115453_Inital")]
     partial class Inital
     {
         /// <inheritdoc />
@@ -36,8 +36,8 @@ namespace Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DomainUserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("DomainUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -97,11 +97,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("DomainUser", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -247,25 +245,19 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Point", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ColorHex")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("XCoordinate")
                         .HasColumnType("int");
 
                     b.Property<int>("YCoordinate")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("ColorHex")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("XCoordinate", "YCoordinate");
 
                     b.HasIndex("OwnerId");
 

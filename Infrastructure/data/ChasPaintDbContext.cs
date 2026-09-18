@@ -16,5 +16,8 @@ public class ChasPaintDbContext : IdentityDbContext<ApplicationUser>
 		.HasOne(a => a.DomainUser)
 		.WithOne()
 		.HasForeignKey<ApplicationUser>("DomainUserId");
+
+		builder.Entity<Point>()
+		.HasKey(p => new { p.XCoordinate, p.YCoordinate });
 	}
 }

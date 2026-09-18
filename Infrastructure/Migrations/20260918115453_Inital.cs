@@ -29,8 +29,7 @@ namespace Infrastructure.Migrations
                 name: "DomainUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -64,7 +63,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DomainUserId = table.Column<int>(type: "int", nullable: false),
+                    DomainUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -95,16 +94,14 @@ namespace Infrastructure.Migrations
                 name: "Points",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     YCoordinate = table.Column<int>(type: "int", nullable: false),
                     XCoordinate = table.Column<int>(type: "int", nullable: false),
                     ColorHex = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerId = table.Column<int>(type: "int", nullable: true)
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Points", x => x.Id);
+                    table.PrimaryKey("PK_Points", x => new { x.XCoordinate, x.YCoordinate });
                     table.ForeignKey(
                         name: "FK_Points_DomainUsers_OwnerId",
                         column: x => x.OwnerId,
