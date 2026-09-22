@@ -7,12 +7,13 @@ public class PointRepository : IPointRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<List<Point>> GetPoints(int xMin, int xMax, int yMin, int yMax)
+    public async Task<List<Point>> GetPoints(PointCoordinateSpanDTO pointSpan)
     {
         return await _dbContext.Points
             .Where(
-                p => p.XCoordinate >= xMin && p.XCoordinate <= xMax
-                && p.YCoordinate >= yMin && p.YCoordinate <= yMax)
+                p => p.XCoordinate >= pointSpan.MinX && p.XCoordinate <= pointSpan.MaxX
+                && p.YCoordinate >= pointSpan.MinY && p.YCoordinate <= pointSpan.MaxY)
+            .Include(p => p.Owner)
             .ToListAsync();
     }
 

@@ -18,6 +18,15 @@ public class PointController : ControllerBase
         _currentUserService = currentUserService;
         _pointService = pointService;
     }
+    [HttpGet("points")]
+    public async Task<ActionResult<List<PointDTO>>> GetPoints(
+        [FromBody] PointCoordinateSpanDTO pointSpan
+    )
+    {
+        var result = await _pointService.GetPoints(pointSpan);
+
+        return Ok(result);
+    }
     [Authorize]
     [HttpPatch("update")]
     public async Task<IActionResult> UpdatePoints(
