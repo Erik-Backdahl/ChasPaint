@@ -1,3 +1,4 @@
+using System.Net.NetworkInformation;
 using System.Security.AccessControl;
 
 public class PointService : IPointService
@@ -26,6 +27,13 @@ public class PointService : IPointService
     }
     public async Task UpdateBatch(List<PointDTO> points, DomainUser owner)
     {
+        foreach(PointDTO point in points)
+        {
+            if(point.YCoordinate < 0 || point.YCoordinate > 1000)
+                throw new Exception("Y coordinate out of span");
+            if(point.XCoordinate < 0 || point.XCoordinate > 1000)
+                throw new Exception("X coordinate out of span");
+        }
         await _pointRepository.UpdateBatch(points, owner);
     }
 }
