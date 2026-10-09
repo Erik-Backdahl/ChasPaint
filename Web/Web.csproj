@@ -12,6 +12,10 @@
     <UserSecretsId>b52f8885-8729-48e9-bbd7-c2f8337bdf7f</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <UseAppHost>false</UseAppHost>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.12" />
