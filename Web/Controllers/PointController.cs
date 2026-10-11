@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PointController : ControllerBase
+public class CanvasController : ControllerBase
 {
     private readonly IPointService _pointService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ICurrentUserService _currentUserService;
-    public PointController(
+    public CanvasController(
         IPointService pointService,
         UserManager<ApplicationUser> userManager,
         ICurrentUserService currentUserService)
