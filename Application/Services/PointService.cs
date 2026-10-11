@@ -37,9 +37,9 @@ public class PointService : IPointService
     {
         foreach (PointDTO point in points)
         {
-            if (point.YCoordinate < 0 || point.YCoordinate > 1000)
+            if (point.YCoordinate < 0 || point.YCoordinate > 500)
                 throw new Exception("Y coordinate out of span");
-            if (point.XCoordinate < 0 || point.XCoordinate > 1000)
+            if (point.XCoordinate < 0 || point.XCoordinate > 500)
                 throw new Exception("X coordinate out of span");
         }
         await _pointRepository.UpdateBatch(points, owner);
