@@ -15,6 +15,8 @@ namespace ChasPaint.Web
             var builder = WebApplication.CreateBuilder(args);
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
             builder.Services.AddProblemDetails();
 
             builder.Services.AddOpenApi();
