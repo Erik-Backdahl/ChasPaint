@@ -30,6 +30,18 @@ namespace ChasPaint.Web
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ChasPaintDbContext>();
 
+            var frontendOrigin = builder.Configuration["frontendOrigin"] ?? throw new Exception("No frontendOrigin found");
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "Frontend", configurePolicy: p =>
+                {
+                    p.WithOrigins(frontendOrigin)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddAuthorization();
@@ -56,8 +68,12 @@ namespace ChasPaint.Web
             }
 
             app.UseExceptionHandler();
-
             app.MapIdentityApi<ApplicationUser>();
+
+            app.UseCors("Frontend");
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.MapControllers();
 
