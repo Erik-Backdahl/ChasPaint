@@ -20,10 +20,9 @@ public class CanvasController : ControllerBase
     }
     [HttpGet("points")]
     public async Task<ActionResult<List<PointDTO>>> GetPoints(
-        [FromQuery] PointCoordinateSpanDTO pointSpan
     )
     {
-        var result = await _pointService.GetPoints(pointSpan);
+        var result = await _pointService.GetPoints();
 
         return Ok(result);
     }

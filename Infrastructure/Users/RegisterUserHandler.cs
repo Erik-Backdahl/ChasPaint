@@ -22,7 +22,7 @@ public class RegisterUserHandler
         var domainUser = new DomainUser
         {
             Id = Guid.NewGuid(),
-            UserName = cmd.Email,
+            UserName = cmd.Username,
         };
         await _userRepository.AddAsync(domainUser);
 
