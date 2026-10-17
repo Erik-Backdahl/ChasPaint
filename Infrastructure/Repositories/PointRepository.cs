@@ -17,28 +17,27 @@ public class PointRepository : IPointRepository
             .ToListAsync();
     }
 
-    public async Task UpdateBatch(List<PointDTO> newPoints, DomainUser owner)
+    public async Task Update(PointDTO point, DomainUser owner)
     {
-        foreach (var point in newPoints)
+
+        var existing = await _dbContext.Points.FindAsync(point.XCoordinate, point.YCoordinate);
+
+        if (existing != null)
         {
-            var existing = await _dbContext.Points.FindAsync(point.XCoordinate, point.YCoordinate);
-            
-            if (existing != null)
-            {
-                existing.ColorHex = point.ColorHex;
-                existing.Owner = owner;
-            }
-            else
-            {
-                _dbContext.Points.Add(new Point
-                {
-                    XCoordinate = point.XCoordinate,
-                    YCoordinate = point.YCoordinate,
-                    ColorHex = point.ColorHex,
-                    Owner = owner
-                });
-            }
+            existing.ColorHex = point.ColorHex;
+            existing.Owner = owner;
         }
+        else
+        {
+            _dbContext.Points.Add(new Point
+            {
+                XCoordinate = point.XCoordinate,
+                YCoordinate = point.YCoordinate,
+                ColorHex = point.ColorHex,
+                Owner = owner
+            });
+        }
+
         await _dbContext.SaveChangesAsync();
     }
 }

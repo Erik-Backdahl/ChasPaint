@@ -20,7 +20,7 @@ public class CanvasController : ControllerBase
     }
     [HttpGet("points")]
     public async Task<ActionResult<List<PointDTO>>> GetPoints(
-        [FromBody] PointCoordinateSpanDTO pointSpan
+        [FromQuery] PointCoordinateSpanDTO pointSpan
     )
     {
         var result = await _pointService.GetPoints(pointSpan);
@@ -30,12 +30,12 @@ public class CanvasController : ControllerBase
     [Authorize]
     [HttpPatch("update")]
     public async Task<IActionResult> UpdatePoints(
-        [FromBody] List<PointDTO> points)
+        [FromBody] PointDTO point)
     {
         var domainUser = await _currentUserService.GetCurrentUserAsync();
         if (domainUser is null) return Unauthorized();
 
-        await _pointService.UpdateBatch(points, domainUser);
+        await _pointService.Update(point, domainUser);
 
         return NoContent();
     }
