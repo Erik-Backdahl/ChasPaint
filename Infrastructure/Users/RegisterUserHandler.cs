@@ -28,7 +28,7 @@ public class RegisterUserHandler
 
         var appUser = new ApplicationUser
         {
-            UserName = cmd.Email,
+            UserName = cmd.Username,
             Email = cmd.Email,
             DomainUserId = domainUser.Id
         };
