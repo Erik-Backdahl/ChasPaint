@@ -44,6 +44,13 @@ namespace ChasPaint.Web
                 });
             });
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "ChasPaintCookie";
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddAuthorization();
