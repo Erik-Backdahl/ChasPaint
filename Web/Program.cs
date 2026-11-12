@@ -22,7 +22,7 @@ namespace ChasPaint.Web
             builder.Services.AddOpenApi();
 
             builder.Services.AddDbContext<ChasPaintDbContext>(options =>
-                options.UseSqlServer(builder.Configuration["ConnectionString"]));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 
             builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
